@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-export default function CreateGiftCard() {
+export default function GiftCards() {
     const [formData, setFormData] = useState({
         code: '',
         amount: '',
