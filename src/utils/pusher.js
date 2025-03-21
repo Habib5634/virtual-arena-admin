@@ -1,7 +1,7 @@
 import Pusher from 'pusher-js';
 
-const pusher = new Pusher('a230b3384874418b8baa', {
-  cluster: 'ap2',
+const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
   forceTLS: true
 });
 
