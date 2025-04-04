@@ -22,7 +22,7 @@ const DashboardLayout = ({ children, pageTitle }) => {
     const [isProfileOpen, setProfileOpen] = useState(false);
     const dispatch = useDispatch();
         const { notifications } = useSelector((state) => state.notifications);
-    
+        const [isMobile, setIsMobile] = useState(false);
         useEffect(() => {
                     dispatch(fetchNotifications());
             }, [ dispatch]);
@@ -55,22 +55,15 @@ const toggleProfile = () => {
     // Effect to handle screen resize
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 768) {
-                setSidebarOpen(false); // Close sidebar on small screens
-            } else {
-                setSidebarOpen(true); // Open sidebar on larger screens
-            }
+          setIsMobile(window.innerWidth < 768);
         };
-
-        // Add event listener for window resize
-        window.addEventListener('resize', handleResize);
-
-        // Initial check on component mount
+        
+        // Set initial value
         handleResize();
-
-        // Cleanup event listener on component unmount
+        
+        window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+      }, []);
 
     const handleLogout =()=>{
         localStorage.removeItem('user')
@@ -81,9 +74,9 @@ const toggleProfile = () => {
         <div className="flex min-h-screen bg-blackish ">
             {/* Sidebar */}
             <div
-                className={`   min-h-screen h-full text-white ${isSidebarOpen ? 'w-64' : 'w-16'} transition-width duration-300 relative`}
+                className={`   min-h-screen h-full text-white ${isSidebarOpen ? 'w-64' : 'w-16'} bg-blackish transition-width duration-300 relative`}
                 style={{
-                    position: window.innerWidth < 768 ? 'absolute' : 'relative', // Absolute position on small screens
+                    position: isMobile ? 'absolute' : 'relative', // Absolute position on small screens
                     zIndex: 50, // Ensure sidebar is above other content
                     height: '100vh', // Full height
                     left: isSidebarOpen ? '0px' : '0px', // Hide sidebar when closed on small screens
@@ -232,7 +225,7 @@ const toggleProfile = () => {
             </div>
 
             {/* Main Content */}
-            <div className={`${(window.innerWidth < 768 && !isSidebarOpen) && 'pl-16'} border-l border-gray1 flex-1 overflow-x-hidden relative`}>
+            <div className={`${isMobile && !isSidebarOpen && 'pl-16'} border-l border-gray1 flex-1 overflow-x-hidden relative`}>
             <div className='h-20 pl-10 pr-4 flex justify-between items-center'>
                     <h1 className='text-white font-bold text-[16px] md:text-xl'>{pageTitle}</h1>
                     <div className='flex items-center gap-4'>

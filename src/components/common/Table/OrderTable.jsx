@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Modal from '../Modal';
 import Portal from '@/utils/portal';
 
@@ -22,7 +22,19 @@ const OrderTable = ({
     const toggleStatusMenu = (index) => {
         setDropdownOpen(dropdownOpen === index ? null : index);
     };
-
+    useEffect(() => {
+        if (
+          dropdownOpen !== null &&
+          rowRefs.current[dropdownOpen] &&
+          typeof window !== 'undefined'
+        ) {
+          const rect = rowRefs.current[dropdownOpen].getBoundingClientRect();
+          setDropdownPosition({
+            top: rect.bottom + window.scrollY,
+            left: rect.right - 200,
+          });
+        }
+      }, [dropdownOpen]);
     const handleStatusChange = (row, status) => {
         setSelectedRow(row);
         setSelectedStatus(status);
@@ -89,15 +101,9 @@ const OrderTable = ({
                                             <div
                                                 className="fixed z-50 w-48 bg-white border border-gray-200 rounded-lg shadow-lg"
                                                 style={{
-                                                    top: `${
-                                                        rowRefs.current[rowIndex]?.getBoundingClientRect()
-                                                            .bottom + window.scrollY
-                                                    }px`,
-                                                    left: `${
-                                                        rowRefs.current[rowIndex]?.getBoundingClientRect()
-                                                            .right - 200
-                                                    }px`,
-                                                }}
+                                                    top: `${dropdownPosition.top}px`,
+                                                    left: `${dropdownPosition.left}px`,
+                                                  }}
                                             >
                                                 <button
                                                     onClick={() => handleStatusChange(row, 'pending')}
