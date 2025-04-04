@@ -1,5 +1,4 @@
 "use client"
-import Checkbox from '@/components/common/Checkbox';
 import FieldContainer from '@/components/common/FieldContainer';
 import Input from '@/components/common/Input';
 import Select from '@/components/common/Select';

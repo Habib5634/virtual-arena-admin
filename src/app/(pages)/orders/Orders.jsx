@@ -10,8 +10,10 @@ import DetailOrderView from './DetailOrderView';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence,motion } from 'framer-motion';
 import pusher from '@/utils/pusher';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOrders } from '@/Store/ReduxSlice/orderSlice';
 
-const Orders = () => {
+const Orders = ({orders}) => {
     // Table columns
     const columns = [
         { header: 'Order ID', accessor: 'order_id' },
@@ -23,10 +25,11 @@ const Orders = () => {
         { header: 'User', accessor: 'user_name' },
         { header: 'Items', accessor: 'items_count' },
     ];
+    
     const [statusModalOpen, setStatusModalOpen] = useState(false)
     const [selectedStatus, setSelectedStatus] = useState('')
     // State for orders
-    const [orders, setOrders] = useState([]);
+    
     const router = useRouter();
     const searchParams = useSearchParams();
     const [filteredOrders, setFilteredOrders] = useState(orders);
@@ -50,7 +53,9 @@ const Orders = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [sidebarMode, setSidebarMode] = useState('view'); // 'view' or 'edit
     const [dropdownOpen, setDropdownOpen] = useState(null);
+   
 
+    
 
     // Filter options
     const filterOptions = [
@@ -74,20 +79,7 @@ const Orders = () => {
         }
     };
 
-    // Fetch orders from the backend
-    const handleFetchOrders = async () => {
-        try {
-            const response = await axios.get(`${API_URL}/admin/orders`, getAuthHeaders());
-            setOrders(response.data.orders);
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-            toast.error('Failed to fetch orders.');
-        }
-    };
-
-    useEffect(() => {
-        handleFetchOrders();
-    }, []);
+    
 
     useEffect(() => {
         const channel = pusher.subscribe('my-channel');
@@ -132,7 +124,7 @@ const Orders = () => {
         setDropdownOpen(null)
         // Call API to update status
     };
-    console.log(filteredOrders)
+    // console.log(filteredOrders)
     const handleClosesidebar = () => {
         setSidebarOpen(false)
         router.push(`/orders`)
@@ -141,7 +133,7 @@ const Orders = () => {
         useEffect(() => {
             const orderId = searchParams.get('order_id');
             if (orderId) {
-                const booking = orders.find((b) => b.order_id === parseInt(orderId));
+                const booking = orders?.find((b) => b.order_id === parseInt(orderId));
                 if (booking) {
                     setSelectedOrder(booking);
                     setSidebarOpen(true);

@@ -31,7 +31,7 @@ const Payments = () => {
     const data = filteredPayments?.map((payment) => ({
         payment_id: payment?.payment_id,
         amount: `$${payment?.amount}`,
-        status: payment?.stripe_payment_status,
+        status: payment?.status,
         created_at: new Date(payment?.created_at).toLocaleDateString(),
         user_name: payment?.user_id,
         entity_type: payment?.entity_type,

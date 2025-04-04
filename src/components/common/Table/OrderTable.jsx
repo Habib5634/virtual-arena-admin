@@ -53,7 +53,7 @@ const OrderTable = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((row, rowIndex) => (
+                        {data?.map((row, rowIndex) => (
                             <tr
                                 key={rowIndex}
                                 ref={(el) => (rowRefs.current[rowIndex] = el)}

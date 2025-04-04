@@ -179,7 +179,7 @@ const Registrations = () => {
                         {sidebarMode === 'edit' ? (
                             <EditRegistrationForm data={selectedRegistration} onSave={handleSave} />
                         ) : (
-                            <DetailView data={registrationData} title="Registration Details" />
+                            <DetailView data={registrationData} title="Registration Details" type="TOURNAMENT" id={selectedRegistration?.registration_id} />
                         )}
                     </motion.div>
                 )}

@@ -14,3 +14,4 @@ const AllBookingsPage = () => {
 }
 
 export default AllBookingsPage
+const client = new SomeDBClient({ cluster: 'my-cluster' });

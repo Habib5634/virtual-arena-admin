@@ -171,7 +171,7 @@ const Tournaments = () => {
                 {sidebarMode === 'edit' ? (
                     <EditTournamentForm data={selectedTournament} onSave={handleSave} />
                 ) : (
-                    <DetailView data={bookingData} title='Booking Details' />
+                    <DetailView data={bookingData} title='Booking Details' type="TOURNAMENT" id={selectedTournament?.tournament_id} />
                 )}
             </div>
         </div>
