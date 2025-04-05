@@ -11,7 +11,6 @@ const OrderPage = () => {
   useEffect(() => {
     dispatch(fetchOrders()); // Fetch orders when component mounts
   }, [dispatch]);
-  console.log(orders)
   return (
     <Suspense fallback={"loading..."}>
       <DashboardLayout pageTitle={'Orders'}>

@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContaine
 import Orders from '../orders/Orders';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrders } from '@/Store/ReduxSlice/orderSlice';
-import html2pdf from 'html2pdf.js';
+
 
 
 
@@ -56,17 +56,18 @@ if (data.success) {
 // Get the latest 10 orders
 const latestOrders = orders?.slice(-10) || [];
  // Function to generate and download PDF
- const downloadDashboardReport = () => {
+ const downloadDashboardReport = async () => {
     if (!dashboard) {
         alert("Dashboard data not available!");
         return;
     }
 
-    // Create a temporary div to hold the invoice content
+    const html2pdf = (await import('html2pdf.js')).default;
+
     const reportTemplate = document.createElement('div');
     reportTemplate.innerHTML = `
         <div class="p-6 bg-white text-black">
-         <img src='/assets/logo.png' class="w-[179px] md:w-[199px] mb-10" />
+            <img src='/assets/logo.png' class="w-[179px] md:w-[199px] mb-10" />
             <h1 class="text-2xl font-bold mb-4">Dashboard Report</h1>
             <p><strong>Total Revenue:</strong> $${dashboard.totalRevenue}</p>
             <p><strong>Active Users:</strong> ${dashboard.activeUsers}</p>
@@ -76,10 +77,8 @@ const latestOrders = orders?.slice(-10) || [];
         </div>
     `;
 
-    // Append the temporary div to the body (required for html2pdf to work)
     document.body.appendChild(reportTemplate);
 
-    // PDF options
     const options = {
         margin: 10,
         filename: `dashboard_report_${new Date().toISOString().slice(0, 10)}.pdf`,
@@ -93,10 +92,10 @@ const latestOrders = orders?.slice(-10) || [];
         .set(options)
         .save()
         .then(() => {
-            // Remove the temporary div after PDF generation
             document.body.removeChild(reportTemplate);
         });
 };
+
 console.log(latestOrders);
     return (
         <div className=' w-full'>

@@ -1,3 +1,4 @@
+'use client' 
 import DashboardLayout from '@/components/DashboardLayout'
 import React, { Suspense } from 'react'
 import Products from './Products'

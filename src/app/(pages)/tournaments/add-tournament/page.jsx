@@ -1,3 +1,5 @@
+'use client'
+
 import DashboardLayout from '@/components/DashboardLayout'
 import React, { Suspense } from 'react'
 import AddTournament from './AddTournament'

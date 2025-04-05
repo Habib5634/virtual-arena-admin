@@ -32,7 +32,7 @@ export const getAuthHeaders = () => {
   
     return {
       headers: {
-        Authorization: `Bearer ${authToken}`,
+        Authorization: `Bearer ${typeof window !== 'undefined' ? localStorage.getItem('token') : ''}`,
         "Content-Type": "multipart/form-data",
       }
     };

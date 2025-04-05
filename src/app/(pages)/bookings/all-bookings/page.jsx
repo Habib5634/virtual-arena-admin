@@ -5,11 +5,13 @@ import Bookings from './Bookings'
 
 const AllBookingsPage = () => {
   return (
-    <Suspense fallback={"loading..."}>
+   <Suspense fallback={'loading'}>
+
     <DashboardLayout pageTitle={'All Bookings'}>
       <Bookings/>
     </DashboardLayout>
-    </Suspense>
+   </Suspense>
+   
   )
 }
 

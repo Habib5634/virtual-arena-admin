@@ -1,7 +1,7 @@
+'use client'
 import DashboardLayout from '@/components/DashboardLayout'
 import React, { Suspense } from 'react'
 import GiftCards from './GiftCards'
-
 const AddCardPage = () => {
   return (
     <Suspense fallback={"Loading..."}>
